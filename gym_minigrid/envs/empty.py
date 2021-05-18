@@ -61,6 +61,28 @@ class EmptyEnv16x16(EmptyEnv):
     def __init__(self, **kwargs):
         super().__init__(size=16, **kwargs)
 
+class EmptyEnvFixed16x16(EmptyEnv):
+    def __init__(self, **kwargs):
+        super().__init__(size=16, agent_start_pos=(1,7), agent_start_dir=0, **kwargs)
+    def _gen_grid(self, width, height):
+        # Create an empty grid
+        self.grid = Grid(width, height)
+
+        # Generate the surrounding walls
+        self.grid.wall_rect(0, 0, width, height)
+
+        # Place a goal square horizontal to the agent
+        self.put_obj(Goal(), 14, 7)
+
+        # Place the agent
+        if self.agent_start_pos is not None:
+            self.agent_pos = self.agent_start_pos
+            self.agent_dir = self.agent_start_dir
+        else:
+            self.place_agent()
+
+        self.mission = "get to the green goal square"
+
 register(
     id='MiniGrid-Empty-5x5-v0',
     entry_point='gym_minigrid.envs:EmptyEnv5x5'
@@ -89,4 +111,9 @@ register(
 register(
     id='MiniGrid-Empty-16x16-v0',
     entry_point='gym_minigrid.envs:EmptyEnv16x16'
+)
+
+register(
+    id='MiniGrid-EmptyFixed-16x16-v0',
+    entry_point='gym_minigrid.envs:EmptyEnvFixed16x16'
 )

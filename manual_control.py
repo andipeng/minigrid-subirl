@@ -61,10 +61,10 @@ def key_handler(event):
     if event.key == ' ':
         step(env.actions.toggle)
         return
-    if event.key == 'pageup':
+    if event.key == 'p':
         step(env.actions.pickup)
         return
-    if event.key == 'pagedown':
+    if event.key == 'd':
         step(env.actions.drop)
         return
 
@@ -76,7 +76,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument(
     "--env",
     help="gym environment to load",
-    default='MiniGrid-MultiRoom-N6-v0'
+    default='MiniGrid-DoorKey-16x16-v0'
 )
 parser.add_argument(
     "--seed",
@@ -88,11 +88,11 @@ parser.add_argument(
     "--tile_size",
     type=int,
     help="size at which to render tiles",
-    default=32
+    default=16
 )
 parser.add_argument(
     '--agent_view',
-    default=False,
+    default=True,
     help="draw the agent sees (partially observable view)",
     action='store_true'
 )
